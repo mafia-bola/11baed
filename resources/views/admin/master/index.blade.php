@@ -1,13 +1,13 @@
 @extends('admin.layouts.app')
 @push('css')
     <style>
-        #datatables th,#datatables td, #datatables thead{
+        /* #datatables th,#datatables td, #datatables thead{
             border : 1px solid #b9b9b9;
             border-bottom: 1px solid #b9b9b9 !important;
         }
         #datatables th{
             text-align: center;
-        }
+        } */
     </style>
 @endpush
 @section('content')
@@ -46,7 +46,11 @@
                                         <td>No.</td>
                                         @foreach ($form as $item)
                                             @if (array_key_exists('view_index',$item) && $item['view_index'])
+                                            @if(array_key_exists('format',$item) && $item['format'] == 'rupiah')
+                                                <td>{{$item['label']}} (Rp)</td>
+                                            @else
                                                 <td>{{$item['label']}}</td>
+                                            @endif
                                             @endif
                                         @endforeach
                                         <td>Opsi</td>
@@ -63,7 +67,7 @@
                                                         {{ AppHelper::viewRelation($row,$item['view_relation']) }}
                                                         @else
                                                             @if(array_key_exists('format',$item) && $item['format'] == 'rupiah')
-                                                            Rp. {{number_format($row->{$item['name']},2,',','.')}}
+                                                                {{number_format($row->{$item['name']},2,',','.')}}
                                                             @else
                                                             {{ $row->{$item['name']} }}
                                                             @endif

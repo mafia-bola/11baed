@@ -134,6 +134,7 @@
     <script>
     $(function () {
         $('#satker,#rekening,#tahun,#bulan').on('change', function(){
+            $('#download').val(false);
            $('#formRekon').submit();
         });
     })

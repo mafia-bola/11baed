@@ -69,10 +69,8 @@
         </div>
     </div>
     <div class="section text-center">
-        <div class="section-text">BERITA ACARA REKONSILIASI REKENING MILIK SATUAN KERJA LINGKUP KEMENTRIAN NEGARA / LEMBAGA</div>
-        <div class="section-text">ANTARA</div>
-        <div class="section-text">KPPN DENPASAR</div>
-        <div class="section-text">DENGAN</div>
+        <div class="section-text">LAPORAN TRANSAKSI</div>
+        
         {{-- <div class="section-text">{{$satkerSelected->nama_satker}}</div> --}}
     </div>
     <br>
@@ -87,7 +85,11 @@
                     <td>No.</td>
                     @foreach ($form as $item)
                         @if (array_key_exists('view_index',$item) && $item['view_index'])
-                            <td>{{$item['label']}}</td>
+                            @if(array_key_exists('format',$item) && $item['format'] == 'rupiah')
+                                <td>{{$item['label']}} (Rp)</td>
+                            @else
+                                <td>{{$item['label']}}</td>
+                            @endif
                         @endif
                     @endforeach
                 </tr>
@@ -103,7 +105,7 @@
                                     {{ AppHelper::viewRelation($row,$item['view_relation']) }}
                                     @else
                                         @if(array_key_exists('format',$item) && $item['format'] == 'rupiah')
-                                        Rp. {{number_format($row->{$item['name']},2,',','.')}}
+                                        {{number_format($row->{$item['name']},2,',','.')}}
                                         @else
                                         {{ $row->{$item['name']} }}
                                         @endif
@@ -126,11 +128,11 @@
        <div>NIP. 197011291997031001</div>
     </div>
     
-    <div class="tte-right">
+    {{-- <div class="tte-right">
         <div>Satuan Kerja </div>        
-        {{-- <div>{{$satkerSelected->nama_satker}}</div> --}}
+        <div>{{$satkerSelected->nama_satker}}</div>
         <br>
         <br>
         <br>
-        {{-- <div>{{$satkerSelected->nama_bendahara}}</div> --}}
-    </div>
+        <div>{{$satkerSelected->nama_bendahara}}</div>
+    </div> --}}

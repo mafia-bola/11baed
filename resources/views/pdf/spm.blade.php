@@ -69,10 +69,7 @@
         </div>
     </div>
     <div class="section text-center">
-        <div class="section-text">BERITA ACARA REKONSILIASI REKENING MILIK SATUAN KERJA LINGKUP KEMENTRIAN NEGARA / LEMBAGA</div>
-        <div class="section-text">ANTARA</div>
-        <div class="section-text">KPPN DENPASAR</div>
-        <div class="section-text">DENGAN</div>
+        <div class="section-text">LAPORAN SPM</div>        
         {{-- <div class="section-text">{{$satkerSelected->nama_satker}}</div> --}}
     </div>
     <br>
@@ -87,7 +84,11 @@
                     <td>No.</td>
                     @foreach ($form as $item)
                         @if (array_key_exists('view_index',$item) && $item['view_index'])
+                        @if(array_key_exists('format',$item) && $item['format'] == 'rupiah')
+                            <td>{{$item['label']}} (Rp)</td>
+                        @else
                             <td>{{$item['label']}}</td>
+                        @endif
                         @endif
                     @endforeach
                 </tr>
@@ -103,7 +104,7 @@
                                     {{ AppHelper::viewRelation($row,$item['view_relation']) }}
                                     @else
                                         @if(array_key_exists('format',$item) && $item['format'] == 'rupiah')
-                                        Rp. {{number_format($row->{$item['name']},2,',','.')}}
+                                        {{number_format($row->{$item['name']},2,',','.')}}
                                         @else
                                         {{ $row->{$item['name']} }}
                                         @endif

@@ -260,10 +260,93 @@ class TransaksiController extends Controller
                 return view('admin.transaksi.index',compact('template','form','data','satker','rekening','tahun','bln','kategori'));
             }
         }else{
-            $data = Transaksi::join('rekening','rekening.id','=','transaksi.rekening_id')
-            ->join('satker','satker.id','=','rekening.satker_id')
-            ->where('satker.id',auth()->user()->satker_id)->get();
-            return view('admin.master.index',compact('template','form','data'));
+          
+            $satker = SatuanKerja::where('id',auth()->user()->satker_id)->get();
+            $rekening = [];
+            $tahun = [2016,2017,2018,2019];
+            $bln = [
+                1 => 'Januari',
+                2 => 'Februari',
+                3 => 'Maret',
+                4 => 'April',
+                5 => 'Mei',
+                6 => 'Juni',
+                7 => 'Juli',
+                8 => 'Agustus',
+                9 => 'September',
+                10 => 'Oktober',
+                11 => 'November',
+                12 => 'Desember'
+            ];
+            $kategori = [
+                [
+                    'value' => 'BP KAS',
+                    'name' => 'BP KAS'
+                ],
+                [ 
+                    'value' => 'BP UANG',
+                    'name' => 'BP UANG',
+                ],
+                [
+                    'value' => 'BP BPP',
+                    'name' => 'BP BPP',
+                ],
+                [
+                    'value' => 'BP UP',
+                    'name' => 'BP UP',
+                ],
+                [
+                    'value' => 'BP UANG',
+                    'name' => 'BP UANG',
+                ],
+                [
+                    'value' => 'BP IS BENDAHARA',
+                    'name' => 'BP IS BENDAHARA',
+                ],
+                [
+                    'value' => 'BP PAJAK',
+                    'name' => 'BP PAJAK',
+                ],
+                [
+                    'value' => 'BP LAIN LAIN',
+                    'name' => 'BP LAIN LAIN',
+                ], 
+            ];
+            if($request->has('satker')){
+                $rekening = Rekening::where('satker_id',$request->satker)
+                    ->get();
+            }
+
+            $tr = Transaksi::select(DB::raw('transaksi.*'))
+                ->join('rekening','rekening.id','=','transaksi.rekening_id')
+                ->join('satker','satker.id','=','rekening.satker_id');
+            if($request->has('satker') && $request->staker != 'all'){
+                $tr->where('satker.id',auth()->user()->satker_id);
+            }
+            if($request->has('rekening') && $request->rekening != 'all'){
+                $tr->where('rekening.id',$request->rekening);
+            }
+            if($request->has('tahun') && $request->tahun != 'all'){
+                $tr->whereYear('transaksi.tgl_transaksi',$request->tahun);
+            }
+            if($request->has('bulan') && $request->bulan != 'all'){
+                $tr->whereMonth('transaksi.tgl_transaksi',$request->bulan);
+            }
+            if($request->has('kategori') && $request->kategori != 'all'){
+                $tr->where('transaksi.kategori',$request->kategori);
+            }
+            if($request->has('kategori') && $request->metode != 'all'){
+                $tr->where('transaksi.metode_pembayaran',$request->metode);
+            }
+            $data = $tr->get();
+            if($request->has('download') && $request->download == 'true'){
+                $view = view('pdf.transaksi',compact('template','form','data','satker','rekening','tahun','bln','kategori'))->render();
+                $pdf = new Mpdf();
+                $pdf->WriteHTML($view);
+                return $pdf->Output('TRANSAKSI.pdf',\Mpdf\Output\Destination::INLINE);
+            }else{
+                return view('admin.transaksi.index',compact('template','form','data','satker','rekening','tahun','bln','kategori'));
+            }
         }
         
     }
