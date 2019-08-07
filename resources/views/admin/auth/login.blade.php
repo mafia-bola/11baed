@@ -31,14 +31,18 @@
 
 <body class="hold-transition login-page" style="background-image : url('{{asset("image/logo-login.jpeg")}}');background-size: cover;  ">
     <div class="login-box">
-        {{-- <div class="login-logo">
+        <div class="login-logo">
             <img src="{{asset('image/logo.png')}}" alt="" width="120px">
-        </div> --}}
-        <h3 class="text-center" style="color : white">KPPN</h3>
+        </div>
+        <h3 class="text-center" style="color : grey">KPPN</h3>
         <!-- /.login-logo -->
         {{-- Memunculkan alert pemberitahuan --}}
         {!!Alert::showBox()!!}   
-
+        @if($errors->any())
+            <div class="alert alert-danger">
+                <h4>{{$errors->first()}}</h4>
+            </div>
+        @endif
         <div class="login-box-body">
             <p class="login-box-msg">LOGIN</p>
             <form action="{{route('login')}}" method="post">

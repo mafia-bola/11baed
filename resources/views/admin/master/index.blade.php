@@ -46,11 +46,11 @@
                                         <td>No.</td>
                                         @foreach ($form as $item)
                                             @if (array_key_exists('view_index',$item) && $item['view_index'])
-                                            @if(array_key_exists('format',$item) && $item['format'] == 'rupiah')
-                                                <td>{{$item['label']}} (Rp)</td>
-                                            @else
-                                                <td>{{$item['label']}}</td>
-                                            @endif
+                                                @if(array_key_exists('format',$item) && $item['format'] == 'rupiah')
+                                                    <td>{{$item['label']}} (Rp)</td>
+                                                @else
+                                                    <td>{{$item['label']}}</td>
+                                                @endif
                                             @endif
                                         @endforeach
                                         <td>Opsi</td>
