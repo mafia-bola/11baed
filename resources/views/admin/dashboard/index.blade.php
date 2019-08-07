@@ -77,11 +77,13 @@
                                     </div>
                                 </div>
                                 <div class="col-md-4">
-                                    <ul class="chart-legend clearfix">
-                                        <li><i class="fa fa-circle-o text-red"></i> Ditolak</li>
-                                        <li><i class="fa fa-circle-o text-green"></i> Diterima</li>
-                                        <li><i class="fa fa-circle-o text-yellow"></i> Pending</li>
-                                    </ul>
+                                    @foreach ($data as $item)
+                                        <ul class="chart-legend clearfix">
+                                            <li><i class="fa fa-circle-o text-red"></i> Ditolak : Rp. {{number_format($item->ditolak)}}</li>
+                                            <li><i class="fa fa-circle-o text-green"></i> Diterima : Rp. {{number_format($item->diterima)}}</li>
+                                            <li><i class="fa fa-circle-o text-yellow"></i> Pending : Rp. {{number_format($item->pending)}}</li>
+                                        </ul>
+                                    @endforeach
                                 </div>
                             </div>
                         </div>
@@ -134,10 +136,13 @@
                                     </div>
                                 </div>
                                 <div class="col-md-4">
-                                    <ul class="chart-legend clearfix">
-                                        <li><i class="fa fa-circle-o text-red"></i> Pengeluran</li>
-                                        <li><i class="fa fa-circle-o text-green"></i> Pemasukan</li>
-                                    </ul>
+                                    @foreach ($pp as $item)
+                                        <ul class="chart-legend clearfix">
+                                            <li><i class="fa fa-circle-o text-red"></i> Pengeluran : Rp. {{number_format($item->pengeluaran)}}</li>
+                                            <li><i class="fa fa-circle-o text-green"></i> Pemasukan : Rp. {{number_format($item->pemasukan)}}</li>
+                                        </ul>
+                                        
+                                    @endforeach
                                 </div>
                             </div>
                         </div>
@@ -190,11 +195,13 @@
                                     </div>
                                 </div>
                                 <div class="col-md-4">
-                                    <ul class="chart-legend clearfix">
-                                        <li><i class="fa fa-circle-o text-red"></i> Gagal</li>
-                                        <li><i class="fa fa-circle-o text-green"></i> Sukses</li>
-                                        <li><i class="fa fa-circle-o text-yellow"></i> Retur</li>
-                                    </ul>
+                                    @foreach ($tr as $item)
+                                        <ul class="chart-legend clearfix">
+                                            <li><i class="fa fa-circle-o text-red"></i> Gagal : Rp. {{number_format($item->gagal)}}</li>
+                                            <li><i class="fa fa-circle-o text-green"></i> Sukses : Rp. {{number_format($item->sukses)}}</li>
+                                            <li><i class="fa fa-circle-o text-yellow"></i> Retur : Rp. {{number_format($item->retur)}}</li>
+                                        </ul>                                        
+                                    @endforeach
                                 </div>
                             </div>
                         </div>
@@ -261,7 +268,8 @@
                             responsive           : true,
                             maintainAspectRatio  : false,
                             legendTemplate       : '<ul class=\'<%=name.toLowerCase()%>-legend\'><% for (var i=0; i<segments.length; i++){%><li><span style=\'background-color:<%=segments[i].fillColor%>\'></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>',
-                            tooltipTemplate      : '<%=value %> <%=label%> users'
+                            // tooltipTemplate      : '<%=value %> <%=label%> users',
+                            
                         };
 
                         chart.Doughnut(pieData,pieOptions);
@@ -308,7 +316,7 @@
                             responsive           : true,
                             maintainAspectRatio  : false,
                             legendTemplate       : '<ul class=\'<%=name.toLowerCase()%>-legend\'><% for (var i=0; i<segments.length; i++){%><li><span style=\'background-color:<%=segments[i].fillColor%>\'></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>',
-                            tooltipTemplate      : '<%=value %> <%=label%>'
+                            // tooltipTemplate      : '<%=value %> <%=label%>'
                         };
 
                         chart.Doughnut(pieData,pieOptions);
@@ -361,7 +369,8 @@
                             responsive           : true,
                             maintainAspectRatio  : false,
                             legendTemplate       : '<ul class=\'<%=name.toLowerCase()%>-legend\'><% for (var i=0; i<segments.length; i++){%><li><span style=\'background-color:<%=segments[i].fillColor%>\'></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>',
-                            tooltipTemplate      : '<%=value %> <%=label%>'
+                            // tooltipTemplate      : '<%=value %> <%=label%>'
+                            
                         };
 
                         chart.Doughnut(pieData,pieOptions);

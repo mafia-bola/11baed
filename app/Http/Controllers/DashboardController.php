@@ -97,9 +97,9 @@ class DashboardController extends Controller
             $tr = DB::table('transaksi')
                 ->select(DB::raw('
                     satker.nama_satker,
-                    SUM(CASE WHEN transaksi.status = "Sukses" THEN 1 ELSE 0 END) AS sukses,
-                    SUM(CASE WHEN transaksi.status = "Gagal" THEN 1 ELSE 0 END) AS gagal,
-                    SUM(CASE WHEN transaksi.status = "Retur" THEN 1 ELSE 0 END) AS retur
+                    SUM(CASE WHEN transaksi.status = "Sukses" THEN transaksi.nominal ELSE 0 END) AS sukses,
+                    SUM(CASE WHEN transaksi.status = "Gagal" THEN transaksi.nominal ELSE 0 END) AS gagal,
+                    SUM(CASE WHEN transaksi.status = "Retur" THEN transaksi.nominal ELSE 0 END) AS retur
                 '))
                 ->join('rekening','rekening.id','=','transaksi.rekening_id')
                 ->join('satker','satker.id','=','rekening.satker_id')
@@ -146,9 +146,9 @@ class DashboardController extends Controller
                $tr = DB::table('transaksi')
                 ->select(DB::raw('
                     satker.nama_satker,
-                    SUM(CASE WHEN transaksi.status = "Sukses" THEN 1 ELSE 0 END) AS sukses,
-                    SUM(CASE WHEN transaksi.status = "Gagal" THEN 1 ELSE 0 END) AS gagal,
-                    SUM(CASE WHEN transaksi.status = "Retur" THEN 1 ELSE 0 END) AS retur
+                    SUM(CASE WHEN transaksi.status = "Sukses" THEN transaksi.nominal ELSE 0 END) AS sukses,
+                    SUM(CASE WHEN transaksi.status = "Gagal" THEN transaksi.nominal ELSE 0 END) AS gagal,
+                    SUM(CASE WHEN transaksi.status = "Retur" THEN transaksi.nominal ELSE 0 END) AS retur
                 '))
                 ->join('rekening','rekening.id','=','transaksi.rekening_id')
                 ->join('satker','satker.id','=','rekening.satker_id')
@@ -160,6 +160,7 @@ class DashboardController extends Controller
             }
             $tr = $tr->get();
         }
+        //  dd($pp);
 
         $template = (object) $this->template;
         return view('admin.dashboard.index',compact('template','data','satker','bln','pp','tr'));
