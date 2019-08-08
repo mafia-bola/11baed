@@ -22,7 +22,7 @@ class SPMAdminController extends Controller
         'icon' => 'fa fa-book',
         'theme' => 'skin-blue',
         'config' => [
-            'index.show.is_show' => false,
+            'index.show.is_show' => true,
             'index.create.is_show' => false,
             'index.delete.is_show' => false,
         ]
@@ -85,6 +85,11 @@ class SPMAdminController extends Controller
                 'type' => 'select',
                 'option' => $status,
                 'view_index' => true,
+            ],
+            [
+                'label' => 'File',
+                'name' => 'file',
+                'type' => 'file'
             ]
         ];
     }
