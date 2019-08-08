@@ -35,6 +35,9 @@
                     <div class="box box-info">
                         <div class="box-header">
                             <h3 class="box-title"><i class="{{$template->icon}}"></i> {{$template->title}}</h3>
+                            <a href="{{route("$template->route".'.create')}}" class="btn btn-primary pull-right {{AppHelper::config($config,'index.create.is_show') ? AppHelper::config($config,'index.create.is_show') : 'hidden'}}">
+                                <i class="fa fa-pencil"></i> Tambah {{$template->title}}
+                            </a>
                         </div>
                         <div class="box-body">
                             <div class="row">
@@ -44,7 +47,9 @@
                                         <div class="form-group">
                                             <label for="">Satuan Kerja</label>
                                             <select name="satker" id="satker" class="form-control">
+                                                @if(auth()->user()->role == "Admin")
                                                 <option value="all">Semua</option>
+                                                @endif
                                                 @foreach ($satker as $item)
                                                     <option value="{{$item->id}}" {{request('satker') == $item->id ? 'selected' : ''}}>{{$item->nama_satker}}</option>
                                                 @endforeach
@@ -124,7 +129,11 @@
                                                 <td>No.</td>
                                                 @foreach ($form as $item)
                                                     @if (array_key_exists('view_index',$item) && $item['view_index'])
-                                                        <td>{{$item['label']}}</td>
+                                                        @if(array_key_exists('format',$item) && $item['format'] == 'rupiah')
+                                                            <td>{{$item['label']}} (Rp)</td>
+                                                        @else
+                                                            <td>{{$item['label']}}</td>
+                                                        @endif
                                                     @endif
                                                 @endforeach
                                                 <td>Opsi</td>
@@ -141,7 +150,7 @@
                                                                 {{ AppHelper::viewRelation($row,$item['view_relation']) }}
                                                                 @else
                                                                     @if(array_key_exists('format',$item) && $item['format'] == 'rupiah')
-                                                                    Rp. {{number_format($row->{$item['name']},2,',','.')}}
+                                                                     {{number_format($row->{$item['name']},2,',','.')}}
                                                                     @else
                                                                     {{ $row->{$item['name']} }}
                                                                     @endif

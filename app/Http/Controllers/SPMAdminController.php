@@ -157,6 +157,7 @@ class SPMAdminController extends Controller
         if($request->has('status') && $request->status != 'all'){
             $spm->where('spm.status',$request->status);
         }
+        $spm->groupBy('spm.id');
         $data = $spm->get();
         if($request->has('download') && $request->download == 'true'){
             $view = view('pdf.spm',compact('template','form','data','satker','rekening','tahun','bln','status'))->render();

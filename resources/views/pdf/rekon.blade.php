@@ -84,8 +84,8 @@
     <thead style="background-color:aqua">
         <tr>
             <th>LPJ No : {{$lpj->no_dokumen}}</th>
-            <th>Hasil Transaksi</th>
-            <th>Hasil LPJ</th>
+            <th>Hasil Transaksi (Rp)</th>
+            <th>Hasil LPJ (Rp)</th>
             <th>Status</th>
         </tr>
     </thead>
@@ -93,8 +93,8 @@
         @foreach ($kategori as $item)
             <tr>
                 <td>{{$item['name']}}</td>
-                <td class="text-right">Rp. {{number_format($data[$item['name']]['hasil_transaksi'],2,',','.')}}</td>
-                <td class="text-right">Rp. {{number_format($data[$item['name']]['hasil_lpj'],2,',','.')}}</td>
+                <td class="text-right">{{number_format($data[$item['name']]['hasil_transaksi'],2,',','.')}}</td>
+                <td class="text-right">{{number_format($data[$item['name']]['hasil_lpj'],2,',','.')}}</td>
                 <td>{{$data[$item['name']]['status']}}</td>
             </tr>
         @endforeach                                               

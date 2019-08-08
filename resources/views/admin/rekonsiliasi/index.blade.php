@@ -100,8 +100,8 @@
                                         <thead>
                                             <tr>
                                                 <th>LPJ No : {{$lpj->no_dokumen}}</th>
-                                                <th>Hasil Transaksi</th>
-                                                <th>Hasil LPJ</th>
+                                                <th>Hasil Transaksi (Rp)</th>
+                                                <th>Hasil LPJ (Rp)</th>
                                                 <th>Status</th>
                                             </tr>
                                         </thead>
@@ -109,8 +109,8 @@
                                             @foreach ($kategori as $item)
                                                 <tr>
                                                     <td>{{$item['name']}}</td>
-                                                    <td style="text-align:right">Rp. {{number_format($data[$item['name']]['hasil_transaksi'],2,',','.')}}</td>
-                                                    <td style="text-align:right">Rp. {{number_format($data[$item['name']]['hasil_lpj'],2,',','.')}}</td>
+                                                    <td style="text-align:right">{{number_format($data[$item['name']]['hasil_transaksi'],2,',','.')}}</td>
+                                                    <td style="text-align:right">{{number_format($data[$item['name']]['hasil_lpj'],2,',','.')}}</td>
                                                     <td>{{$data[$item['name']]['status']}}</td>
                                                 </tr>
                                             @endforeach                                               
@@ -134,6 +134,7 @@
     <script>
     $(function () {
         $('#satker,#rekening,#tahun,#bulan').on('change', function(){
+            $('#download').val(false);
            $('#formRekon').submit();
         });
     })

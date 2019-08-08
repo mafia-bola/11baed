@@ -117,13 +117,14 @@ class RekonsiliasiController extends Controller
                         'status' => $lpj->{$this->convertKategori($kategori['name'])} == 0.0 ? 'SESUAI' : 'TIDAK SESUAI'
                     ];
                 }
-                // dd($transaksi);
+                
                 foreach($transaksi as $item){
                     $total =  $item->total_pemasukan - $item->total_pengeluaran;                    
                     $data[$item->kategori]['hasil_transaksi'] = $total;
-                    $data[$item->kategori]['status'] = $total === $data[$item->kategori]['hasil_lpj'] ? 'SESUAI' : 'TIDAK SESUAI';
+                    @$data[$item->kategori]['status'] = $total === $data[$item->kategori]['hasil_lpj'] ? 'SESUAI' : 'TIDAK SESUAI';
                 }
             }
+            // dd($data);
             
         }
         $kategori = $this->kategori;
